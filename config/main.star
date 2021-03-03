@@ -28,7 +28,6 @@ load("//iostools_config.star", "iostools_config")
 load("//packages_config.star", "packages_config")
 load("//packaging_config.star", "packaging_config")
 load("//plugins_config.star", "plugins_config")
-load("//plugins_tagged_config.star", "plugins_tagged_config")
 
 # Avoid jumping back and forth with configs being updated by lower version
 # lucicfg.
@@ -174,6 +173,4 @@ packaging_config.setup(release_branches)
 recipes_config.setup()
 
 plugins_config.setup()
-
-plugins_tagged_config.setup()
 ######################### Console Definitions #################################
