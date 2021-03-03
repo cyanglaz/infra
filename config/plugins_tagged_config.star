@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 """
-Configurations for the plugins repository that listens to new tag changes.
+Configurations for the plugins repository that listens to any tag changes.
 """
 
 load("//lib/common.star", "common")
@@ -26,9 +26,8 @@ def plugins_define_recipes():
         )
 
 def plugins_tagged_config():
-    console_view_name = "plugins_tagged"
 
-    # Defines a list view for try builders
+    # Defines a list view for builders
     list_view_name = "plugins-tagged"
     luci.list_view(
         name = list_view_name,
@@ -36,9 +35,9 @@ def plugins_tagged_config():
     )
 
     trigger_name = branch + "-gitiles-trigger-plugins-tagged"
-
     ref = "refs/tags/.+"
 
+    # poll for any tags change
     luci.gitiles_poller(
         name = trigger_name,
         bucket = "prod",
@@ -46,7 +45,9 @@ def plugins_tagged_config():
         refs = [ref],
     )
 
-    # Defines plugins Windows platform try builders
+    console_view_name = "plugins_tagged"
+
+    # Defines builders
     common.linux_prod_builder(
         name = "Linux%s plugin publish" % ("" if branch == "master" else " " + branch),
         recipe = publish_recipe_name,
