@@ -17,13 +17,12 @@ def _setup():
 def plugins_define_recipes():
     """Defines recipes for plugins repo."""
     publish_recipe_name = "plugins/plugins_publish"
-    for name in recipe_list:
-        luci.recipe(
-            name =  publish_recipe_name,
-            cipd_package =
-                "flutter/recipe_bundles/flutter.googlesource.com/recipes",
-            cipd_version = "refs/heads/master",
-        )
+    luci.recipe(
+        name =  publish_recipe_name,
+        cipd_package =
+            "flutter/recipe_bundles/flutter.googlesource.com/recipes",
+        cipd_version = "refs/heads/master",
+    )
 
 def plugins_tagged_config_setup():
 
