@@ -18,13 +18,14 @@ def plugins_define_recipes():
     """Defines recipes for plugins repo."""
     publish_recipe_name = "plugins/plugins_publish"
     luci.recipe(
-        name =  publish_recipe_name,
+        name = publish_recipe_name,
         cipd_package =
             "flutter/recipe_bundles/flutter.googlesource.com/recipes",
         cipd_version = "refs/heads/master",
     )
 
 def plugins_tagged_config_setup():
+    """Detailed builder configures."""
 
     # Defines a list view for builders
     list_view_name = "plugins-tagged"
@@ -33,7 +34,7 @@ def plugins_tagged_config_setup():
         title = "Plugins tagged builders",
     )
 
-    trigger_name = branch + "-gitiles-trigger-plugins-tagged"
+    trigger_name = "-gitiles-trigger-plugins-tagged"
     ref = "refs/tags/.+"
 
     # poll for any tags change
@@ -44,14 +45,27 @@ def plugins_tagged_config_setup():
         refs = [ref],
     )
 
+    triggering_policy = scheduler.greedy_batching(
+        max_batch_size = 20,
+        max_concurrent_invocations = 1,
+    )
+
     console_view_name = "plugins_tagged"
+    luci.console_view(
+        name = console_view_name,
+        repo = repos.PLUGINS,
+        refs = [ref],
+    )
+
+    publish_recipe_name = "plugins/plugins_publish"
 
     # Defines builders
     common.linux_prod_builder(
-        name = "Linux%s plugin publish" % ("" if branch == "master" else " " + branch),
+        name = "plugin publish|publish",
         recipe = publish_recipe_name,
         console_view_name = console_view_name,
         triggered_by = [trigger_name],
+        triggering_policy = triggering_policy,
     )
 
 plugins_tagged_config = struct(setup = _setup)
