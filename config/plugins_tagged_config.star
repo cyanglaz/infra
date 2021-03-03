@@ -12,7 +12,7 @@ load("//lib/repos.star", "repos")
 def _setup():
     """Set default configurations for builders, and setup recipes."""
     plugins_define_recipes()
-    plugins_tagged_config()
+    plugins_tagged_config_setup()
 
 def plugins_define_recipes():
     """Defines recipes for plugins repo."""
@@ -25,7 +25,7 @@ def plugins_define_recipes():
             cipd_version = "refs/heads/master",
         )
 
-def plugins_tagged_config():
+def plugins_tagged_config_setup():
 
     # Defines a list view for builders
     list_view_name = "plugins-tagged"
