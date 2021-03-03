@@ -55,4 +55,4 @@ def plugins_tagged_config():
         triggered_by = [trigger_name],
     )
 
-plugins_config = struct(setup = _setup)
+plugins_tagged_config = struct(setup = _setup)
