@@ -93,7 +93,7 @@ def plugins_product_tagged_config_setup():
 
     # Defines builders
     common.linux_prod_builder(
-        name = "plugin publish|publish",
+        name = "Plugin Publish|publish",
         recipe = publish_recipe_name,
         console_view_name = console_view_name,
         triggered_by = [trigger_name],
