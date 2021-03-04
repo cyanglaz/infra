@@ -77,11 +77,6 @@ def plugins_product_tagged_config_setup():
         refs = [ref],
     )
 
-    triggering_policy = scheduler.greedy_batching(
-        max_batch_size = 20,
-        max_concurrent_invocations = 1,
-    )
-
     console_view_name = "plugins_tagged"
     luci.console_view(
         name = console_view_name,
@@ -97,7 +92,6 @@ def plugins_product_tagged_config_setup():
         recipe = publish_recipe_name,
         console_view_name = console_view_name,
         triggered_by = [trigger_name],
-        triggering_policy = triggering_policy,
     )
 
 plugins_config = struct(setup = _setup)
